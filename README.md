@@ -4,10 +4,10 @@ TUI-based project installer. Loads a catalog of projects from a JSON config and 
 
 ## Technology
 
-- **Go** 1.26
-- **Bubble Tea v2** — TUI framework
-- **Lipgloss** — styling
-- **Bubbles** — reusable TUI components
+- [**Go**](https://go.dev) 1.26
+- [**Bubble Tea v2**](https://github.com/charmbracelet/bubbletea) — TUI framework
+- [**Lipgloss**](https://github.com/charmbracelet/lipgloss) — styling
+- [**Bubbles**](https://github.com/charmbracelet/bubbles) — reusable TUI components
 
 ## Usage
 
