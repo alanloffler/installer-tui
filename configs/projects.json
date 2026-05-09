@@ -1,12 +1,21 @@
 [
   {
+    "name": "WhatsApp messages",
+    "description": "Servidor para enviar mensajes a números de WhatsApp",
+    "repo": "https://github.com/alanloffler/whatsapp",
+    "install_cmd": "git clone https://github.com/alanloffler/whatsapp",
+    "usage_hint": "Run `npm run dev` para iniciar servidor"
+  },
+  {
     "name": "React Auth",
+    "description": "App template en React para autenticación de usuarios",
     "repo": "https://github.com/alanloffler/react-auth-api",
     "install_cmd": "git clone https://github.com/alanloffler/react-auth-api",
     "usage_hint": "Run `npm install` para instalar dependencias"
   },
   {
     "name": "Nest Auth",
+    "description": "API de autenticación en NestJS y PostgreSQL",
     "repo": "https://github.com/alanloffler/nest-auth-api",
     "install_cmd": "git clone https://github.com/alanloffler/nest-auth-api",
     "usage_hint": "Run `npm install` para instalar dependencias"
