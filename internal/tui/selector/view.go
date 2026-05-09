@@ -29,7 +29,8 @@ func (m Model) View() tea.View {
 			name = styles.Selected.Render(p.Name)
 		}
 
-		s += fmt.Sprintf("%s %s %s %s\n", cursor, checkbox, name, styles.Dim.Render(p.Repo))
+		s += fmt.Sprintf("%s %s %s %s\n", cursor, checkbox, name, styles.Dim.Render(p.Description))
+		s += fmt.Sprintf("%s\n", styles.Repo.Render(p.Repo))
 	}
 
 	s += "\n" + styles.Dim.Render("j/k: navegar • space: seleccionar • enter: instalar • q: salir")
