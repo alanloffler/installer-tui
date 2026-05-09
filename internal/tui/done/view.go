@@ -30,7 +30,7 @@ func (m Model) View() tea.View {
 		}
 	}
 
-	s += "\n" + styles.Dim.Render("q: salir")
+	s += "\n" + styles.Dim.Render("esc: inicio • q: salir")
 
 	return tea.NewView(s)
 }
