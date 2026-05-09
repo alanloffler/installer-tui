@@ -46,6 +46,9 @@ func (a App) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case done.BackMsg:
 		a.current = selector.New(a.projects)
 		return a, a.current.Init()
+	case done.HomeMsg:
+		a.current = home.New()
+		return a, a.current.Init()
 	}
 
 	next, cmd := a.current.Update(msg)
