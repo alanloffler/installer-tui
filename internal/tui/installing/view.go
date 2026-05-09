@@ -9,8 +9,8 @@ import (
 	tea "charm.land/bubbletea/v2"
 )
 
-func (m Model) Subtitle() string {
-	return "Instalando los paquetes seleccionados"
+func (m Model) SectionSubtitle() string {
+	return "Instalación"
 }
 
 func (m Model) View() tea.View {
