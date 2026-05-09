@@ -10,6 +10,7 @@ type Model struct {
 	Results []installer.Result
 }
 
+type HomeMsg struct{}
 type BackMsg struct{}
 
 func New(results []installer.Result) Model {
