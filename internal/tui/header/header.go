@@ -8,7 +8,7 @@ import (
 
 var (
 	titleStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("#55d286")).Bold(true).Padding(0, 2)
-	subtitleStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#9ca3af")).Italic(true).PaddingLeft(2)
+	subtitleStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#9ca3af")).Bold(true).Italic(true).PaddingLeft(2)
 )
 
 func Render(appTitle, appSubtitle, sectionSubtitle string) string {
