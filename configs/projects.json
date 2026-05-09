@@ -1,0 +1,14 @@
+[
+  {
+    "name": "React Auth",
+    "repo": "https://github.com/alanloffler/react-auth-api",
+    "install_cmd": "git clone https://github.com/alanloffler/react-auth-api",
+    "usage_hint": "Run `npm install` para instalar dependencias"
+  },
+  {
+    "name": "Nest Auth",
+    "repo": "https://github.com/alanloffler/nest-auth-api",
+    "install_cmd": "git clone https://github.com/alanloffler/nest-auth-api",
+    "usage_hint": "Run `npm install` para instalar dependencias"
+  }
+]
