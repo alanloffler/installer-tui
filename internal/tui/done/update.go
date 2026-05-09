@@ -9,6 +9,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch key.String() {
 		case "q", "ctrl+c":
 			return m, tea.Quit
+		case "esc":
+			return m, func() tea.Msg { return BackMsg{} }
 		}
 	}
 
