@@ -5,6 +5,7 @@ import (
 	"github.com/alanloffler/bubbletea/internal/domain"
 	"github.com/alanloffler/bubbletea/internal/tui/done"
 	"github.com/alanloffler/bubbletea/internal/tui/header"
+	"github.com/alanloffler/bubbletea/internal/tui/home"
 	"github.com/alanloffler/bubbletea/internal/tui/installing"
 	"github.com/alanloffler/bubbletea/internal/tui/selector"
 )
@@ -22,7 +23,7 @@ type App struct {
 }
 
 func NewApp(projects []domain.Project) App {
-	return App{current: selector.New(projects), projects: projects}
+	return App{current: home.New(), projects: projects}
 }
 
 func (a App) Init() tea.Cmd {
@@ -31,6 +32,11 @@ func (a App) Init() tea.Cmd {
 
 func (a App) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch m := msg.(type) {
+	case home.GoToSelectorMsg:
+		a.current = selector.New(a.projects)
+		return a, a.current.Init()
+	case home.GoToNodePkgMsg:
+		return a, nil
 	case selector.DoneMsg:
 		a.current = installing.New(m.Selected)
 		return a, a.current.Init()
