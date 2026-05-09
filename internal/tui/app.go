@@ -17,11 +17,12 @@ type subtitler interface {
 }
 
 type App struct {
-	current tea.Model
+	current  tea.Model
+	projects []domain.Project
 }
 
 func NewApp(projects []domain.Project) App {
-	return App{current: selector.New(projects)}
+	return App{current: selector.New(projects), projects: projects}
 }
 
 func (a App) Init() tea.Cmd {
@@ -35,6 +36,9 @@ func (a App) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return a, a.current.Init()
 	case installing.DoneMsg:
 		a.current = done.New(m.Results)
+		return a, a.current.Init()
+	case done.BackMsg:
+		a.current = selector.New(a.projects)
 		return a, a.current.Init()
 	}
 
