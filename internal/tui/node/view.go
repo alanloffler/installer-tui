@@ -32,12 +32,15 @@ func (m Model) View() tea.View {
 		s += fmt.Sprintf("%s %s %s\n", cursor, checkbox, name)
 	}
 
-	homeCursor := "  "
-	if m.cursor == len(m.Packages) {
-		homeCursor = styles.SelectedStyle.Render("▸ ")
-		s += "\n" + homeCursor + styles.SelectedStyle.Render("Volver")
-	} else {
-		s += "\n" + homeCursor + styles.UnselectedStyle.Render("Volver")
+	s += "\n"
+	for i, item := range m.items {
+		c := "  "
+		if m.cursor == len(m.Packages)+i {
+			c = styles.SelectedStyle.Render("▸ ")
+			s += c + styles.SelectedStyle.Render(item.Label)
+		} else {
+			s += c + styles.UnselectedStyle.Render(item.Label)
+		}
 	}
 
 	s += "\n\n" + styles.HelpStyle.Render("j/k: navegar • space: seleccionar • enter: instalar • q: salir")
