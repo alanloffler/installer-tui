@@ -19,9 +19,9 @@ func (m Model) View() tea.View {
 
 		if m.cursor == i {
 			cursor = "▸"
-			s += fmt.Sprintf("%s %s\n", styles.SelectedStyle.Render(cursor), styles.SelectedStyle.Render(item.label))
+			s += fmt.Sprintf("%s %s\n", styles.SelectedStyle.Render(cursor), styles.SelectedStyle.Render(item.Label))
 		} else {
-			s += fmt.Sprintf("%s %s\n", cursor, item.label)
+			s += fmt.Sprintf("%s %s\n", cursor, item.Label)
 		}
 	}
 
