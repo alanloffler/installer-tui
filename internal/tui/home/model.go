@@ -2,13 +2,13 @@ package home
 
 import tea "charm.land/bubbletea/v2"
 
+type GoToSelectorMsg struct{}
+type GoToNodePkgMsg struct{}
+
 type menuItem struct {
 	label string
 	msg   tea.Msg
 }
-
-type GoToSelectorMsg struct{}
-type GoToNodePkgMsg struct{}
 
 type Model struct {
 	items  []menuItem
@@ -18,8 +18,8 @@ type Model struct {
 func New() Model {
 	return Model{
 		items: []menuItem{
-			{label: "Instalar proyectos", msg: GoToSelectorMsg{}},
-			{label: "Instalar paquetes node", msg: GoToNodePkgMsg{}},
+			{label: "Template de proyectos", msg: GoToSelectorMsg{}},
+			{label: "Paquetes de node", msg: GoToNodePkgMsg{}},
 		},
 	}
 }
