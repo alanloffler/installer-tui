@@ -11,6 +11,7 @@ import (
 
 type DoneMsg struct {
 	Results []installer.Result
+	Next    tea.Model
 }
 
 type progressMsg struct {
@@ -29,9 +30,10 @@ type Model struct {
 	progress progress.Model
 	finished bool
 	PM       string
+	back     tea.Model
 }
 
-func NewFromProjects(projects []domain.Project) Model {
+func NewFromProjects(projects []domain.Project, back tea.Model) Model {
 	jobs := make([]Job, len(projects))
 
 	for i, p := range projects {
@@ -39,10 +41,10 @@ func NewFromProjects(projects []domain.Project) Model {
 		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.Install(p) }}
 	}
 
-	return newWithJobs(jobs)
+	return newWithJobs(jobs, back)
 }
 
-func NewFromPackages(pkgs []domain.Package) Model {
+func NewFromPackages(pkgs []domain.Package, back tea.Model) Model {
 	jobs := make([]Job, len(pkgs))
 
 	for i, p := range pkgs {
@@ -50,12 +52,13 @@ func NewFromPackages(pkgs []domain.Package) Model {
 		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.InstallPackage(p) }}
 	}
 
-	return newWithJobs(jobs)
+	return newWithJobs(jobs, back)
 }
 
-func newWithJobs(jobs []Job) Model {
+func newWithJobs(jobs []Job, back tea.Model) Model {
 	return Model{
 		Queue: jobs,
+		back:  back,
 		PM:    installer.DetectPM(),
 		progress: progress.New(
 			progress.WithColors(styles.ColorYellow, styles.ColorYellow),
