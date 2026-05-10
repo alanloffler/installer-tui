@@ -74,7 +74,7 @@ var ErrAlreadyExists = errors.New("instalado previamente")
 var ErrPackageNotFound = errors.New("paquete no encontrado en el registro")
 var ErrNoProject = errors.New("no hay proyecto inicializado en este directorio")
 
-func Install(p domain.Project) Result {
+func InstallProject(p domain.Project) Result {
 	out, err := exec.Command("sh", "-c", p.InstallCmd).CombinedOutput()
 	output := string(out)
 
@@ -102,7 +102,7 @@ func InstallPackage(p domain.Package) Result {
 		if pm != "npm" {
 			installCmd = "add"
 		}
-		cmd = pm + " " + installCmd + " " + p.Repo
+		cmd = pm + " " + installCmd + " " + p.Cmd
 	}
 
 	out, err := exec.Command("sh", "-c", cmd).CombinedOutput()
@@ -114,12 +114,14 @@ func InstallPackage(p domain.Package) Result {
 		return r
 	}
 
-	viewCmd := "npm view " + p.Repo + " version"
+	viewCmd := "npm view " + p.Cmd + " version"
 	switch pm {
-	case "pnpm", "bun":
-		viewCmd = pm + " view " + p.Repo + " version"
+	case "bun":
+		viewCmd = "bun info " + p.Cmd + " version"
+	case "pnpm":
+		viewCmd = "pnpm view " + p.Cmd + " version"
 	case "yarn":
-		viewCmd = "yarn info " + p.Repo + " version"
+		viewCmd = "yarn info " + p.Cmd + " version"
 	}
 
 	if v, err := exec.Command("sh", "-c", viewCmd).Output(); err == nil {
@@ -137,6 +139,7 @@ func classify(output string, err error) error {
 		strings.Contains(low, "already installed"):
 		return ErrAlreadyExists
 	case strings.Contains(low, "e404"),
+		strings.Contains(low, "404"),
 		strings.Contains(low, "not found"),
 		strings.Contains(low, "not in this registry"),
 		strings.Contains(low, "enoent"):
