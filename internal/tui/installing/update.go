@@ -8,8 +8,14 @@ import (
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyPressMsg:
-		if msg.String() == "ctrl+c" {
+		switch msg.String() {
+		case "ctrl+c":
 			return m, tea.Quit
+		case "enter":
+			if m.finished {
+				results := m.Done
+				return m, func() tea.Msg { return DoneMsg{Results: results} }
+			}
 		}
 	case progressMsg:
 		m.Done = append(m.Done, msg.Result)
@@ -28,9 +34,6 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if !m.finished && m.current >= len(m.Queue) && !m.progress.IsAnimating() {
 			m.finished = true
-			results := m.Done
-
-			return m, tea.Batch(cmd, func() tea.Msg { return DoneMsg{Results: results} })
 		}
 
 		return m, cmd
