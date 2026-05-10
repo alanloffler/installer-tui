@@ -2,6 +2,8 @@ package done
 
 import (
 	"errors"
+	"fmt"
+	"strings"
 
 	"github.com/alanloffler/bubbletea/internal/installer"
 	"github.com/alanloffler/bubbletea/internal/tui/styles"
@@ -9,8 +11,13 @@ import (
 	tea "charm.land/bubbletea/v2"
 )
 
+type menuItem struct {
+	label string
+	msg   tea.Msg
+}
+
 func (m Model) SectionSubtitle() string {
-	return "Resúmen"
+	return "Detalles de la instalación"
 }
 
 func (m Model) View() tea.View {
@@ -19,18 +26,45 @@ func (m Model) View() tea.View {
 	for _, r := range m.Results {
 		switch {
 		case errors.Is(r.Err, installer.ErrAlreadyExists):
-			s += styles.Fail.Render("⚠ "+r.Project.Name) + "  " + styles.Dim.Render(r.Err.Error()) + "\n\n"
+			s += styles.ErrorStyle.Render("✗ "+r.Name) + "  " + styles.MutedStyle.Render(r.Err.Error()) + "\n"
+		case errors.Is(r.Err, installer.ErrPackageNotFound):
+			s += styles.ErrorStyle.Render("✗ "+r.Name) + "  " + styles.MutedStyle.Render("paquete no encontrado") + "\n"
+		case errors.Is(r.Err, installer.ErrNoProject):
+			s += styles.ErrorStyle.Render("✗ "+r.Name) + "  " + styles.MutedStyle.Render(r.Err.Error()) + "\n"
 		case r.Err != nil:
-			s += styles.Fail.Render("⚠ "+r.Project.Name) + "  " + styles.Dim.Render(r.Err.Error()) + "\n\n"
+			s += styles.ErrorStyle.Render("✗ "+r.Name) + "  " + styles.MutedStyle.Render(r.Err.Error()) + "\n"
 		default:
-			s += styles.OK.Render("✓ "+r.Project.Name) + "\n"
-			if r.Project.UsageHint != "" {
-				s += "  " + styles.Dim.Render(r.Project.UsageHint) + "\n\n"
+			s += styles.SuccessStyle.Render("✓ " + r.Name)
+			if r.Version != "" {
+				s += " " + styles.MutedStyle.Render(strings.ToLower(r.Name)+"@"+r.Version) + "\n"
+			} else {
+				s += "\n"
+			}
+			if r.UsageHint != "" {
+				s += "  " + styles.MutedStyle.Render(r.UsageHint) + "\n"
 			}
 		}
 	}
 
-	s += "\n" + styles.Dim.Render("h: inicio • b/esc: volver • q: salir")
+	items := []menuItem{
+		{label: "Volver", msg: BackMsg{}},
+		{label: "Inicio", msg: HomeMsg{}},
+	}
+
+	s += "\n"
+
+	for i, item := range items {
+		cursor := "  "
+
+		if m.cursor == i {
+			cursor = styles.SelectedStyle.Render("▸ ")
+			s += fmt.Sprintf("%s%s\n", cursor, styles.SelectedStyle.Render(item.label))
+		} else {
+			s += fmt.Sprintf("%s%s\n", cursor, item.label)
+		}
+	}
+
+	s += "\n" + styles.HelpStyle.Render("j/k: navegar • enter: seleccionar • q: salir")
 
 	return tea.NewView(s)
 }
