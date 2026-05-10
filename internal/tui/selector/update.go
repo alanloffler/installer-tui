@@ -19,7 +19,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.cursor--
 		}
 	case "down", "j":
-		if m.cursor < len(m.Projects) {
+		maxCursor := len(m.Projects) + len(m.items) - 1
+		if m.cursor < maxCursor {
 			m.cursor++
 		}
 	case "space":
@@ -33,7 +34,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	case "enter":
 		if m.cursor == len(m.Projects) {
-			return m, func() tea.Msg { return HomeMsg{} }
+			idx := m.cursor - len(m.Projects)
+			return m, func() tea.Msg { return m.items[idx].Msg }
 		}
 		if len(m.selected) == 0 {
 			return m, nil
