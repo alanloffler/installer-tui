@@ -38,7 +38,7 @@ func NewFromProjects(projects []domain.Project, back tea.Model) Model {
 
 	for i, p := range projects {
 		p := p
-		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.Install(p) }}
+		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.InstallProject(p) }}
 	}
 
 	return newWithJobs(jobs, back)
