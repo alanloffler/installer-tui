@@ -6,15 +6,11 @@ import (
 	"strings"
 
 	"github.com/alanloffler/bubbletea/internal/installer"
+	"github.com/alanloffler/bubbletea/internal/tui/menu"
 	"github.com/alanloffler/bubbletea/internal/tui/styles"
 
 	tea "charm.land/bubbletea/v2"
 )
-
-type menuItem struct {
-	label string
-	msg   tea.Msg
-}
 
 func (m Model) SectionSubtitle() string {
 	return "Detalles de la instalación"
@@ -46,9 +42,9 @@ func (m Model) View() tea.View {
 		}
 	}
 
-	items := []menuItem{
-		{label: "Volver", msg: BackMsg{}},
-		{label: "Inicio", msg: HomeMsg{}},
+	items := []menu.Item{
+		{Label: "Volver", Msg: BackMsg{}},
+		{Label: "Inicio", Msg: HomeMsg{}},
 	}
 
 	s += "\n"
@@ -58,9 +54,9 @@ func (m Model) View() tea.View {
 
 		if m.cursor == i {
 			cursor = styles.SelectedStyle.Render("▸ ")
-			s += fmt.Sprintf("%s%s\n", cursor, styles.SelectedStyle.Render(item.label))
+			s += fmt.Sprintf("%s%s\n", cursor, styles.SelectedStyle.Render(item.Label))
 		} else {
-			s += fmt.Sprintf("%s%s\n", cursor, item.label)
+			s += fmt.Sprintf("%s%s\n", cursor, item.Label)
 		}
 	}
 
