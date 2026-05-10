@@ -3,21 +3,24 @@ package catalog
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 
 	"github.com/alanloffler/bubbletea/internal/domain"
 )
 
-func Load(path string) ([]domain.Project, error) {
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, fmt.Errorf("read catalog error: %w", err)
-	}
-
+func LoadProjects(data []byte) ([]domain.Project, error) {
 	var projects []domain.Project
 	if err := json.Unmarshal(data, &projects); err != nil {
-		return nil, fmt.Errorf("parse catalog error: %w", err)
+		return nil, fmt.Errorf("parse projects catalog error: %w", err)
 	}
 
 	return projects, nil
+}
+
+func LoadPackages(data []byte) ([]domain.Package, error) {
+	var pkgs []domain.Package
+	if err := json.Unmarshal(data, &pkgs); err != nil {
+		return nil, fmt.Errorf("parse packages catalog error: %w", err)
+	}
+
+	return pkgs, nil
 }
