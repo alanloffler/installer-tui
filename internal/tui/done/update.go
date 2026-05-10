@@ -5,13 +5,27 @@ import (
 )
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	if key, ok := msg.(tea.KeyPressMsg); ok {
-		switch key.String() {
-		case "q", "ctrl+c":
-			return m, tea.Quit
-		case "b", "esc":
+	key, ok := msg.(tea.KeyPressMsg)
+	if !ok {
+		return m, nil
+	}
+
+	switch key.String() {
+	case "ctrl-c", "q":
+		return m, tea.Quit
+	case "up", "k":
+		if m.cursor > 0 {
+			m.cursor--
+		}
+	case "down", "j":
+		if m.cursor < 1 {
+			m.cursor++
+		}
+	case "enter":
+		switch m.cursor {
+		case 0:
 			return m, func() tea.Msg { return BackMsg{} }
-		case "h":
+		case 1:
 			return m, func() tea.Msg { return HomeMsg{} }
 		}
 	}
