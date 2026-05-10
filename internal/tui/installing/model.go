@@ -3,6 +3,7 @@ package installing
 import (
 	"github.com/alanloffler/bubbletea/internal/domain"
 	"github.com/alanloffler/bubbletea/internal/installer"
+	"github.com/alanloffler/bubbletea/internal/tui/styles"
 
 	"charm.land/bubbles/v2/progress"
 	tea "charm.land/bubbletea/v2"
@@ -16,18 +17,50 @@ type progressMsg struct {
 	Result installer.Result
 }
 
+type Job struct {
+	Name    string
+	Install func() installer.Result
+}
+
 type Model struct {
-	Queue    []domain.Project
+	Queue    []Job
 	Done     []installer.Result
 	current  int
 	progress progress.Model
 	finished bool
+	PM       string
 }
 
-func New(projects []domain.Project) Model {
+func NewFromProjects(projects []domain.Project) Model {
+	jobs := make([]Job, len(projects))
+
+	for i, p := range projects {
+		p := p
+		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.Install(p) }}
+	}
+
+	return newWithJobs(jobs)
+}
+
+func NewFromPackages(pkgs []domain.Package) Model {
+	jobs := make([]Job, len(pkgs))
+
+	for i, p := range pkgs {
+		p := p
+		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.InstallPackage(p) }}
+	}
+
+	return newWithJobs(jobs)
+}
+
+func newWithJobs(jobs []Job) Model {
 	return Model{
-		Queue:    projects,
-		progress: progress.New(progress.WithDefaultBlend(), progress.WithWidth(40)),
+		Queue: jobs,
+		PM:    installer.DetectPM(),
+		progress: progress.New(
+			progress.WithColors(styles.ColorYellow, styles.ColorYellow),
+			progress.WithWidth(40),
+		),
 	}
 }
 
@@ -35,12 +68,12 @@ func (m Model) Init() tea.Cmd {
 	return installAt(m.Queue, 0)
 }
 
-func installAt(queue []domain.Project, idx int) tea.Cmd {
+func installAt(queue []Job, idx int) tea.Cmd {
 	if idx >= len(queue) {
 		return nil
 	}
 
 	return func() tea.Msg {
-		return progressMsg{Result: installer.Install(queue[idx])}
+		return progressMsg{Result: queue[idx].Install()}
 	}
 }
