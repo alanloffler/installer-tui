@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/alanloffler/bubbletea/internal/installer"
-	"github.com/alanloffler/bubbletea/internal/tui/menu"
 	"github.com/alanloffler/bubbletea/internal/tui/styles"
 
 	tea "charm.land/bubbletea/v2"
@@ -42,14 +41,9 @@ func (m Model) View() tea.View {
 		}
 	}
 
-	items := []menu.Item{
-		{Label: "Volver", Msg: BackMsg{}},
-		{Label: "Inicio", Msg: HomeMsg{}},
-	}
-
 	s += "\n"
 
-	for i, item := range items {
+	for i, item := range m.items {
 		cursor := "  "
 
 		if m.cursor == i {
