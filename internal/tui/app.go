@@ -44,7 +44,7 @@ func (a App) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		a.current = home.New()
 		return a, a.current.Init()
 	case selector.DoneMsg:
-		a.current = installing.New(m.Selected)
+		a.current = installing.NewFromProjects(m.Selected)
 		return a, a.current.Init()
 	case node.HomeMsg:
 		a.current = home.New()
