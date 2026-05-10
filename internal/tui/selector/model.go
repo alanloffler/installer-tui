@@ -5,6 +5,8 @@ import (
 	"github.com/alanloffler/bubbletea/internal/domain"
 )
 
+type HomeMsg struct{}
+
 type DoneMsg struct {
 	Selected []domain.Project
 }
