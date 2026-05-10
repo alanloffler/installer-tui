@@ -17,6 +17,7 @@ func (m Model) View() tea.View {
 	for i, p := range m.Packages {
 		checkbox := styles.UnselectedStyle.Render("[ ]")
 		name := styles.UnselectedStyle.Render(p.Name)
+		description := styles.SubtextStyle.Render(p.Description)
 
 		cursor := " "
 		if m.cursor == i {
@@ -29,7 +30,7 @@ func (m Model) View() tea.View {
 			name = styles.SuccessStyle.Render(p.Name)
 		}
 
-		s += fmt.Sprintf("%s %s %s\n", cursor, checkbox, name)
+		s += fmt.Sprintf("%s %s %s %s\n", cursor, checkbox, name, description)
 	}
 
 	s += "\n"
