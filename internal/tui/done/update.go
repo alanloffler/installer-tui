@@ -24,7 +24,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case "enter":
 		switch m.cursor {
 		case 0:
-			return m, func() tea.Msg { return BackMsg{} }
+			return m, func() tea.Msg { return BackMsg{Next: m.back} }
 		case 1:
 			return m, func() tea.Msg { return HomeMsg{} }
 		}
