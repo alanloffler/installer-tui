@@ -14,7 +14,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			if m.finished {
 				results := m.Done
-				return m, func() tea.Msg { return DoneMsg{Results: results} }
+				return m, func() tea.Msg { return DoneMsg{Results: results, Next: m.back} }
 			}
 		}
 	case progressMsg:
