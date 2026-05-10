@@ -6,12 +6,13 @@ import (
 	tea "charm.land/bubbletea/v2"
 )
 
-type Model struct {
-	Results []installer.Result
-}
-
 type HomeMsg struct{}
 type BackMsg struct{}
+
+type Model struct {
+	Results []installer.Result
+	cursor  int
+}
 
 func New(results []installer.Result) Model {
 	return Model{Results: results}
