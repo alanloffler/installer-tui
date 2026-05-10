@@ -3,18 +3,19 @@ package header
 import (
 	"strings"
 
-	"github.com/charmbracelet/lipgloss"
+	"github.com/alanloffler/bubbletea/internal/tui/styles"
 )
 
 var (
-	titleStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("#55d286")).Bold(true).Padding(0, 2)
-	subtitleStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#9ca3af")).Bold(true).Italic(true).PaddingLeft(2)
+	titleStyle    = styles.HeadingStyle.Padding(0, 2)
+	versionStyle  = styles.SubtextStyle
+	subtitleStyle = styles.SubtextStyle.Bold(true).Italic(true).PaddingLeft(2)
 )
 
 func Render(appTitle, appSubtitle, sectionSubtitle string) string {
 	var b strings.Builder
 	b.WriteString(titleStyle.Render(appTitle))
-	b.WriteString(subtitleStyle.Render(appSubtitle))
+	b.WriteString(versionStyle.Render(appSubtitle))
 	b.WriteString("\n\n")
 
 	if sectionSubtitle != "" {
