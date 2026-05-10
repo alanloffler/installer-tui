@@ -19,16 +19,22 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.cursor--
 		}
 	case "down", "j":
-		if m.cursor < len(m.Projects)-1 {
+		if m.cursor < len(m.Projects) {
 			m.cursor++
 		}
 	case "space":
+		if m.cursor == len(m.Projects) {
+			return m, nil
+		}
 		if _, ok := m.selected[m.cursor]; ok {
 			delete(m.selected, m.cursor)
 		} else {
 			m.selected[m.cursor] = struct{}{}
 		}
 	case "enter":
+		if m.cursor == len(m.Projects) {
+			return m, func() tea.Msg { return HomeMsg{} }
+		}
 		if len(m.selected) == 0 {
 			return m, nil
 		}
