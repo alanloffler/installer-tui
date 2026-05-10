@@ -1,25 +1,23 @@
 package home
 
-import tea "charm.land/bubbletea/v2"
+import (
+	tea "charm.land/bubbletea/v2"
+	"github.com/alanloffler/bubbletea/internal/tui/menu"
+)
 
 type GoToSelectorMsg struct{}
 type GoToNodePkgMsg struct{}
 
-type menuItem struct {
-	label string
-	msg   tea.Msg
-}
-
 type Model struct {
-	items  []menuItem
+	items  []menu.Item
 	cursor int
 }
 
 func New() Model {
 	return Model{
-		items: []menuItem{
-			{label: "Template de proyectos", msg: GoToSelectorMsg{}},
-			{label: "Paquetes de node", msg: GoToNodePkgMsg{}},
+		items: []menu.Item{
+			{Label: "Template de proyectos", Msg: GoToSelectorMsg{}},
+			{Label: "Paquetes de node", Msg: GoToNodePkgMsg{}},
 		},
 	}
 }
