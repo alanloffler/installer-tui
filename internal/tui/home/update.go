@@ -20,7 +20,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.cursor++
 		}
 	case "enter":
-		return m, func() tea.Msg { return m.items[m.cursor].msg }
+		return m, func() tea.Msg { return m.items[m.cursor].Msg }
 	}
 
 	return m, nil
