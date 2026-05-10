@@ -44,19 +44,21 @@ func (a App) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		a.current = home.New()
 		return a, a.current.Init()
 	case selector.DoneMsg:
-		a.current = installing.NewFromProjects(m.Selected)
+		back := selector.New(a.projects)
+		a.current = installing.NewFromProjects(m.Selected, back)
 		return a, a.current.Init()
 	case node.HomeMsg:
 		a.current = home.New()
 		return a, a.current.Init()
 	case node.DoneMsg:
-		a.current = installing.NewFromPackages(m.Selected)
+		back := node.New(a.packages)
+		a.current = installing.NewFromPackages(m.Selected, back)
 		return a, a.current.Init()
 	case installing.DoneMsg:
-		a.current = done.New(m.Results)
+		a.current = done.New(m.Results, m.Next)
 		return a, a.current.Init()
 	case done.BackMsg:
-		a.current = selector.New(a.projects)
+		a.current = m.Next
 		return a, a.current.Init()
 	case done.HomeMsg:
 		a.current = home.New()
