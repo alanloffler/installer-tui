@@ -7,10 +7,11 @@ import (
 	"github.com/alanloffler/bubbletea/internal/tui/header"
 	"github.com/alanloffler/bubbletea/internal/tui/home"
 	"github.com/alanloffler/bubbletea/internal/tui/installing"
+	"github.com/alanloffler/bubbletea/internal/tui/node"
 	"github.com/alanloffler/bubbletea/internal/tui/selector"
 )
 
-const appTitle = "📦 Project Installer"
+const appTitle = "📦 Instalador"
 const appSubtitle = "v0.0.1"
 
 type subtitler interface {
@@ -20,10 +21,11 @@ type subtitler interface {
 type App struct {
 	current  tea.Model
 	projects []domain.Project
+	packages []domain.Package
 }
 
-func NewApp(projects []domain.Project) App {
-	return App{current: home.New(), projects: projects}
+func NewApp(projects []domain.Project, packages []domain.Package) App {
+	return App{current: home.New(), projects: projects, packages: packages}
 }
 
 func (a App) Init() tea.Cmd {
@@ -36,9 +38,19 @@ func (a App) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		a.current = selector.New(a.projects)
 		return a, a.current.Init()
 	case home.GoToNodePkgMsg:
-		return a, nil
+		a.current = node.New(a.packages)
+		return a, a.current.Init()
+	case selector.HomeMsg:
+		a.current = home.New()
+		return a, a.current.Init()
 	case selector.DoneMsg:
 		a.current = installing.New(m.Selected)
+		return a, a.current.Init()
+	case node.HomeMsg:
+		a.current = home.New()
+		return a, a.current.Init()
+	case node.DoneMsg:
+		a.current = installing.NewFromPackages(m.Selected)
 		return a, a.current.Init()
 	case installing.DoneMsg:
 		a.current = done.New(m.Results)
