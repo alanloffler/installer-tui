@@ -1,14 +1,20 @@
 [
   {
     "name": "NotExists",
-    "repo": "r;lwejf09f0ew0jfwjfklsjfds0fsdfsfwkkw"
+    "description": "Test package",
+    "cmd": "rlwejf09f0ew0jfwjfklsjfds0fsdfsfwkkw",
+    "repo": "http://github.com"
   },
   {
     "name": "Zod",
-    "repo": "zod"
+    "description": "Typescript validation",
+    "cmd": "zod",
+    "repo": "https://github.com/colinhacks/zod"
   },
   {
     "name": "Zustand",
-    "repo": "zustand"
+    "description": "State management",
+    "cmd": "zustand",
+    "repo": "https://github.com/pmndrs/zustand"
   }
 ]
