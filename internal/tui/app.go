@@ -12,7 +12,7 @@ import (
 )
 
 const appTitle = "📦 Instalador"
-const appSubtitle = "v0.0.1"
+const appSubtitle = "0.0.1"
 
 type subtitler interface {
 	SectionSubtitle() string
