@@ -6,6 +6,7 @@ import (
 	"github.com/alanloffler/bubbletea/internal/tui/styles"
 
 	"charm.land/bubbles/v2/progress"
+	"charm.land/bubbles/v2/spinner"
 	tea "charm.land/bubbletea/v2"
 )
 
@@ -28,6 +29,7 @@ type Model struct {
 	Done     []installer.Result
 	current  int
 	progress progress.Model
+	spinner  spinner.Model
 	finished bool
 	PM       string
 	back     tea.Model
@@ -37,7 +39,6 @@ func NewFromProjects(projects []domain.Project, back tea.Model) Model {
 	jobs := make([]Job, len(projects))
 
 	for i, p := range projects {
-		p := p
 		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.InstallProject(p) }}
 	}
 
@@ -48,7 +49,6 @@ func NewFromPackages(pkgs []domain.Package, back tea.Model) Model {
 	jobs := make([]Job, len(pkgs))
 
 	for i, p := range pkgs {
-		p := p
 		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.InstallPackage(p) }}
 	}
 
@@ -56,6 +56,11 @@ func NewFromPackages(pkgs []domain.Package, back tea.Model) Model {
 }
 
 func newWithJobs(jobs []Job, back tea.Model) Model {
+	s := spinner.New(
+		spinner.WithSpinner(spinner.MiniDot),
+		spinner.WithStyle(styles.WarningStyle),
+	)
+
 	return Model{
 		Queue: jobs,
 		back:  back,
@@ -64,11 +69,12 @@ func newWithJobs(jobs []Job, back tea.Model) Model {
 			progress.WithColors(styles.ColorYellow, styles.ColorYellow),
 			progress.WithWidth(40),
 		),
+		spinner: s,
 	}
 }
 
 func (m Model) Init() tea.Cmd {
-	return installAt(m.Queue, 0)
+	return tea.Batch(installAt(m.Queue, 0), m.spinner.Tick)
 }
 
 func installAt(queue []Job, idx int) tea.Cmd {
