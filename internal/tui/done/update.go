@@ -14,7 +14,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor--
 			}
 		case key.Matches(msg, keys.Down):
-			if m.cursor < 1 {
+			if m.cursor < len(m.items)-1 {
 				m.cursor++
 			}
 		case key.Matches(msg, keys.Enter):
