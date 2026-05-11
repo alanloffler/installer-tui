@@ -16,8 +16,13 @@ func (m Model) SectionSubtitle() string {
 func (m Model) View() tea.View {
 	s := m.progress.View() + "\n\n"
 
-	if m.PM != "" {
-		s += styles.HighlightStyle.Render(m.PM) + " " + styles.SubtextStyle.Render("package manager detectado") + "\n\n"
+	if m.showPM {
+		if m.PM != "" {
+			s += styles.HighlightStyle.Render(m.PM) + " " + styles.SubtextStyle.Render("detectado") + "\n\n"
+		} else {
+			s += styles.ErrorStyle.Render("Package manager no detectado") + " "
+			s += styles.SubtextStyle.Render("Debes iniciar un proyecto") + "\n\n"
+		}
 	}
 
 	for i, p := range m.Queue {
@@ -26,9 +31,9 @@ func (m Model) View() tea.View {
 			r := m.Done[i]
 			switch {
 			case errors.Is(r.Err, installer.ErrAlreadyExists):
-				s += styles.WarningStyle.Render("⚠ "+p.Name) + " " + styles.MutedStyle.Render(r.Err.Error()) + "\n"
+				s += styles.WarningStyle.Render("⚠ "+p.Name) + "\n"
 			case r.Err != nil:
-				s += styles.ErrorStyle.Render("✗ "+p.Name) + " " + styles.MutedStyle.Render(r.Err.Error()) + "\n"
+				s += styles.ErrorStyle.Render("✗ "+p.Name) + "\n"
 			default:
 				s += styles.SuccessStyle.Render("✓ "+p.Name) + "\n"
 			}
