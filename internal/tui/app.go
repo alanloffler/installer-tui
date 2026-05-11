@@ -2,13 +2,13 @@ package tui
 
 import (
 	tea "charm.land/bubbletea/v2"
-	"github.com/alanloffler/bubbletea/internal/domain"
-	"github.com/alanloffler/bubbletea/internal/tui/done"
-	"github.com/alanloffler/bubbletea/internal/tui/header"
-	"github.com/alanloffler/bubbletea/internal/tui/home"
-	"github.com/alanloffler/bubbletea/internal/tui/installing"
-	"github.com/alanloffler/bubbletea/internal/tui/node"
-	"github.com/alanloffler/bubbletea/internal/tui/selector"
+	"github.com/alanloffler/installer-tui/internal/domain"
+	"github.com/alanloffler/installer-tui/internal/tui/done"
+	"github.com/alanloffler/installer-tui/internal/tui/header"
+	"github.com/alanloffler/installer-tui/internal/tui/home"
+	"github.com/alanloffler/installer-tui/internal/tui/installing"
+	"github.com/alanloffler/installer-tui/internal/tui/node"
+	"github.com/alanloffler/installer-tui/internal/tui/selector"
 )
 
 const appTitle = "📦 Instalador"

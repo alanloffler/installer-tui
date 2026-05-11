@@ -1,9 +1,9 @@
 package installing
 
 import (
-	"github.com/alanloffler/bubbletea/internal/domain"
-	"github.com/alanloffler/bubbletea/internal/installer"
-	"github.com/alanloffler/bubbletea/internal/tui/styles"
+	"github.com/alanloffler/installer-tui/internal/domain"
+	"github.com/alanloffler/installer-tui/internal/installer"
+	"github.com/alanloffler/installer-tui/internal/tui/styles"
 
 	"charm.land/bubbles/v2/progress"
 	"charm.land/bubbles/v2/spinner"

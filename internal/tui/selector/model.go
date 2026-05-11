@@ -2,8 +2,8 @@ package selector
 
 import (
 	tea "charm.land/bubbletea/v2"
-	"github.com/alanloffler/bubbletea/internal/domain"
-	"github.com/alanloffler/bubbletea/internal/tui/menu"
+	"github.com/alanloffler/installer-tui/internal/domain"
+	"github.com/alanloffler/installer-tui/internal/tui/menu"
 )
 
 type HomeMsg struct{}

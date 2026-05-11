@@ -6,8 +6,8 @@ import (
 	"os"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/alanloffler/bubbletea/internal/catalog"
-	"github.com/alanloffler/bubbletea/internal/tui"
+	"github.com/alanloffler/installer-tui/internal/catalog"
+	"github.com/alanloffler/installer-tui/internal/tui"
 )
 
 //go:embed configs/projects.json

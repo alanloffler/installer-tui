@@ -2,7 +2,7 @@ package selector
 
 import (
 	tea "charm.land/bubbletea/v2"
-	"github.com/alanloffler/bubbletea/internal/domain"
+	"github.com/alanloffler/installer-tui/internal/domain"
 )
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {

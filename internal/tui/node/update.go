@@ -2,8 +2,8 @@ package node
 
 import (
 	tea "charm.land/bubbletea/v2"
-	"github.com/alanloffler/bubbletea/internal/domain"
-	"github.com/alanloffler/bubbletea/internal/tui/browser"
+	"github.com/alanloffler/installer-tui/internal/domain"
+	"github.com/alanloffler/installer-tui/internal/tui/browser"
 )
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {

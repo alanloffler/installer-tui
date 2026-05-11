@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/alanloffler/bubbletea/internal/domain"
+	"github.com/alanloffler/installer-tui/internal/domain"
 )
 
 func LoadProjects(data []byte) ([]domain.Project, error) {

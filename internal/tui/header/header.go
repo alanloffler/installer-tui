@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"charm.land/lipgloss/v2"
-	"github.com/alanloffler/bubbletea/internal/tui/styles"
+	"github.com/alanloffler/installer-tui/internal/tui/styles"
 )
 
 var (

@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/alanloffler/bubbletea/internal/tui/browser"
-	"github.com/alanloffler/bubbletea/internal/tui/styles"
+	"github.com/alanloffler/installer-tui/internal/tui/browser"
+	"github.com/alanloffler/installer-tui/internal/tui/styles"
 )
 
 const cursorSlotsPerPkg = 2

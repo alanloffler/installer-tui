@@ -3,8 +3,8 @@ package installing
 import (
 	"errors"
 
-	"github.com/alanloffler/bubbletea/internal/installer"
-	"github.com/alanloffler/bubbletea/internal/tui/styles"
+	"github.com/alanloffler/installer-tui/internal/installer"
+	"github.com/alanloffler/installer-tui/internal/tui/styles"
 
 	tea "charm.land/bubbletea/v2"
 )

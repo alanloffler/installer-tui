@@ -4,7 +4,7 @@ import (
 	"charm.land/bubbles/v2/help"
 	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
-	"github.com/alanloffler/bubbletea/internal/tui/menu"
+	"github.com/alanloffler/installer-tui/internal/tui/menu"
 )
 
 type GoToSelectorMsg struct{}

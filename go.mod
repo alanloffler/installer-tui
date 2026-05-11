@@ -1,4 +1,4 @@
-module github.com/alanloffler/bubbletea
+module github.com/alanloffler/installer-tui
 
 go 1.26.2
 

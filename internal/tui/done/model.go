@@ -1,8 +1,8 @@
 package done
 
 import (
-	"github.com/alanloffler/bubbletea/internal/installer"
-	"github.com/alanloffler/bubbletea/internal/tui/menu"
+	"github.com/alanloffler/installer-tui/internal/installer"
+	"github.com/alanloffler/installer-tui/internal/tui/menu"
 
 	tea "charm.land/bubbletea/v2"
 )

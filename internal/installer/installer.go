@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/alanloffler/bubbletea/internal/domain"
+	"github.com/alanloffler/installer-tui/internal/domain"
 )
 
 type Result struct {
