@@ -32,6 +32,7 @@ type Model struct {
 	spinner  spinner.Model
 	finished bool
 	PM       string
+	showPM   bool
 	back     tea.Model
 }
 
@@ -42,7 +43,7 @@ func NewFromProjects(projects []domain.Project, back tea.Model) Model {
 		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.InstallProject(p) }}
 	}
 
-	return newWithJobs(jobs, back)
+	return newWithJobs(jobs, back, false)
 }
 
 func NewFromPackages(pkgs []domain.Package, back tea.Model) Model {
@@ -52,10 +53,10 @@ func NewFromPackages(pkgs []domain.Package, back tea.Model) Model {
 		jobs[i] = Job{Name: p.Name, Install: func() installer.Result { return installer.InstallPackage(p) }}
 	}
 
-	return newWithJobs(jobs, back)
+	return newWithJobs(jobs, back, true)
 }
 
-func newWithJobs(jobs []Job, back tea.Model) Model {
+func newWithJobs(jobs []Job, back tea.Model, showPM bool) Model {
 	s := spinner.New(
 		spinner.WithSpinner(spinner.MiniDot),
 		spinner.WithStyle(styles.WarningStyle),
@@ -65,6 +66,7 @@ func newWithJobs(jobs []Job, back tea.Model) Model {
 		Queue: jobs,
 		back:  back,
 		PM:    installer.DetectPM(),
+		showPM: showPM,
 		progress: progress.New(
 			progress.WithColors(styles.ColorYellow, styles.ColorYellow),
 			progress.WithWidth(40),
