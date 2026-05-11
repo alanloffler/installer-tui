@@ -31,7 +31,7 @@ func (m Model) View() tea.View {
 		default:
 			s += styles.SuccessStyle.Render("✓ " + r.Name)
 			if r.Version != "" {
-				s += " " + styles.MutedStyle.Render(strings.ToLower(r.Name)+"@"+r.Version) + "\n"
+				s += "  " + styles.MutedStyle.Render(strings.ToLower(r.Name)+"@"+r.Version) + "\n"
 			} else {
 				s += "\n"
 			}
