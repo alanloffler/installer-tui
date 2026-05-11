@@ -17,7 +17,7 @@ func (m Model) View() tea.View {
 	s := m.progress.View() + "\n\n"
 
 	if m.PM != "" {
-		s += styles.MutedStyle.Render("Package manager: "+m.PM) + "\n\n"
+		s += styles.HighlightStyle.Render(m.PM) + " " + styles.SubtextStyle.Render("package manager detectado") + "\n\n"
 	}
 
 	for i, p := range m.Queue {
@@ -33,9 +33,9 @@ func (m Model) View() tea.View {
 				s += styles.SuccessStyle.Render("✓ "+p.Name) + "\n"
 			}
 		case i == m.current:
-			s += "• " + p.Name + styles.MutedStyle.Render(" instalando...") + "\n"
+			s += m.spinner.View() + " " + styles.UnselectedStyle.Render(p.Name) + "\n"
 		default:
-			s += styles.MutedStyle.Render("  "+p.Name+" pendiente") + "\n"
+			s += styles.MutedStyle.Render("  "+p.Name) + "\n"
 		}
 	}
 
