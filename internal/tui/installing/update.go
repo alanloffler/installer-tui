@@ -2,6 +2,7 @@ package installing
 
 import (
 	"charm.land/bubbles/v2/progress"
+	"charm.land/bubbles/v2/spinner"
 	tea "charm.land/bubbletea/v2"
 )
 
@@ -21,7 +22,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Done = append(m.Done, msg.Result)
 		m.current++
 		pct := float64(m.current) / float64(len(m.Queue))
-		cmds := []tea.Cmd{m.progress.SetPercent(pct)}
+		cmds := []tea.Cmd{m.progress.SetPercent(pct), m.spinner.Tick}
 
 		if m.current < len(m.Queue) {
 			cmds = append(cmds, installAt(m.Queue, m.current))
@@ -36,6 +37,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.finished = true
 		}
 
+		return m, cmd
+	case spinner.TickMsg:
+		var cmd tea.Cmd
+		m.spinner, cmd = m.spinner.Update(msg)
 		return m, cmd
 	}
 
