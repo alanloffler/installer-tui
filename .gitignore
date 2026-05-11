@@ -31,3 +31,4 @@ go.work.sum
 # AI
 .agents
 .claude
+skills-lock.json
