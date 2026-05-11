@@ -3,6 +3,7 @@ package node
 import (
 	tea "charm.land/bubbletea/v2"
 	"github.com/alanloffler/bubbletea/internal/domain"
+	"github.com/alanloffler/bubbletea/internal/tui/browser"
 )
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -10,6 +11,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if !ok {
 		return m, nil
 	}
+
+	pkgSlots := cursorSlotsPerPkg * len(m.Packages)
+	maxCursor := pkgSlots + len(m.items) - 1
 
 	switch key.String() {
 	case "ctrl-c", "q":
@@ -19,24 +23,35 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.cursor--
 		}
 	case "down", "j":
-		maxCursor := len(m.Packages) + len(m.items) - 1
 		if m.cursor < maxCursor {
 			m.cursor++
 		}
 	case "space":
-		if m.cursor == len(m.Packages) {
+		if m.cursor >= pkgSlots || m.cursor%cursorSlotsPerPkg == 1 {
 			return m, nil
 		}
-		if _, ok := m.selected[m.cursor]; ok {
-			delete(m.selected, m.cursor)
+		idx := m.cursor / cursorSlotsPerPkg
+		if _, ok := m.selected[idx]; ok {
+			delete(m.selected, idx)
 		} else {
-			m.selected[m.cursor] = struct{}{}
+			m.selected[idx] = struct{}{}
 		}
 	case "enter":
-		if m.cursor >= len(m.Packages) {
-			idx := m.cursor - len(m.Packages)
+		if m.cursor >= pkgSlots {
+			idx := m.cursor - pkgSlots
 			return m, func() tea.Msg { return m.items[idx].Msg }
 		}
+
+		idx := m.cursor / cursorSlotsPerPkg
+		if m.cursor%cursorSlotsPerPkg == 1 {
+			p := m.Packages[idx]
+			if p.Repo != "" {
+				browser.Open(p.Repo)
+			}
+
+			return m, nil
+		}
+
 		if len(m.selected) == 0 {
 			return m, nil
 		}
