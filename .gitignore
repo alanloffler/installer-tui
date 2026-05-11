@@ -26,9 +26,11 @@ go.work.sum
 .env
 
 # Editor/IDE
+.cursor/
 .zed/
 
 # AI
 .agents
 .claude
+CLAUDE.md
 skills-lock.json
