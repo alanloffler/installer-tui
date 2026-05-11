@@ -30,6 +30,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if m.cursor >= pkgSlots || m.cursor%cursorSlotsPerPkg == 1 {
 			return m, nil
 		}
+
 		idx := m.cursor / cursorSlotsPerPkg
 		if _, ok := m.selected[idx]; ok {
 			delete(m.selected, idx)
