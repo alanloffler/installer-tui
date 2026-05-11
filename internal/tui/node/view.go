@@ -65,7 +65,7 @@ func (m Model) View() tea.View {
 		}
 	}
 
-	s += "\n\n" + styles.HelpStyle.Render("j/k: navegar • space: seleccionar • enter: instalar • q: salir")
+	s += "\n\n" + m.help.View(keys)
 
 	return tea.NewView(s)
 }
