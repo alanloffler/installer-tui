@@ -1,7 +1,7 @@
 .PHONY: run
 run:
-	go run .
+	@go run .
 run-no-auth:
-	GH_CONFIG_DIR=$(shell mktemp -d) go run .
+	@GH_CONFIG_DIR=$(shell mktemp -d) go run .
 run-no-gh:
-	PATH=/usr/bin:/bin go run .
+	@go build -o /tmp/installer-tui-test . && PATH=/usr/bin:/bin /tmp/installer-tui-test
